@@ -4,7 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/jetstack/cert-manager/test/acme/dns"
+	acmetest "github.com/cert-manager/cert-manager/test/acme"
+	"sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 )
 
 var (
@@ -15,12 +17,12 @@ func TestRunsSuite(t *testing.T) {
 	/* The manifest path should contain a file named config.json that is a
 	   snippet of valid configuration that should be included on the
 	   ChallengeRequest passed as part of the test cases.*/
-
-	fixture := dns.NewFixture(&linodeDNSProviderSolver{},
-		dns.SetBinariesPath(kubeBuilderBinPath),
-		dns.SetManifestPath("testdata/linode"),
-		dns.SetResolvedZone(zone),
-		dns.SetAllowAmbientCredentials(false),
+	log.SetLogger(zap.New(zap.UseDevMode(true)))
+	fixture := acmetest.NewFixture(&linodeDNSProviderSolver{},
+		acmetest.SetManifestPath("testdata/linode"),
+		acmetest.SetResolvedZone(zone),
+		acmetest.SetAllowAmbientCredentials(false),
+		acmetest.SetDNSServer("ns1.linode.com:53"),
 	)
 
 	fixture.RunConformance(t)
