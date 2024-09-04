@@ -95,7 +95,6 @@ functions.
 Run the test suite with:
 
 ```bash
-./scripts/fetch-test-binaries.sh
 export LINODE_TOKEN=$(echo -n "<your API token>" | base64 -w 0)
 envsubst < testdata/linode/secret.yaml.example > testdata/linode/secret.yaml
 TEST_ZONE_NAME=yourdomain.com. make verify
