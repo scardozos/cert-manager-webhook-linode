@@ -188,7 +188,7 @@ func (c *linodeDNSProviderSolver) fetchZoneAndRecord(linodeClient *linodego.Clie
 // cert-manager itself will later perform a self check to ensure that the
 // solver has correctly configured the DNS provider.
 func (c *linodeDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) error {
-	klog.V(6).Infof("Presented with challenge for fqdn=%s zone=%s", ch.ResolvedFQDN, ch.ResolvedZone)
+	klog.Infof("Presented with challenge for fqdn=%s zone=%s", ch.ResolvedFQDN, ch.ResolvedZone)
 
 	linodeClient, err := c.getLinodeClient(ch)
 	if err != nil {
@@ -204,7 +204,7 @@ func (c *linodeDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) error {
 
 	if record != nil {
 		// If entry already exists, update it
-		klog.V(6).Infof("Updating record for `%s` in zone `%s`", record.Name, zone.Domain)
+		klog.Infof("Updating record for `%s` in zone `%s`", record.Name, zone.Domain)
 		_, err := linodeClient.UpdateDomainRecord(
 			c.ctx,
 			zone.ID,
@@ -223,7 +223,7 @@ func (c *linodeDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) error {
 		}
 	} else {
 		// Create if it does not exist
-		klog.V(6).Infof("Creating new record `%s` in zone `%s`", entry, zone.Domain)
+		klog.Infof("Creating new record `%s` in zone `%s`", entry, zone.Domain)
 		_, err := linodeClient.CreateDomainRecord(
 			c.ctx,
 			zone.ID,
@@ -267,7 +267,7 @@ func getPriority() *int {
 // This is in order to facilitate multiple DNS validations for the same domain
 // concurrently.
 func (c *linodeDNSProviderSolver) CleanUp(ch *v1alpha1.ChallengeRequest) error {
-	klog.V(6).Infof("Cleaning up challenge for fqdn=%s zone=%s", ch.ResolvedFQDN, ch.ResolvedZone)
+	klog.Infof("Cleaning up challenge for fqdn=%s zone=%s", ch.ResolvedFQDN, ch.ResolvedZone)
 
 	linodeClient, err := c.getLinodeClient(ch)
 	if err != nil {
@@ -283,7 +283,7 @@ func (c *linodeDNSProviderSolver) CleanUp(ch *v1alpha1.ChallengeRequest) error {
 
 	if record != nil {
 		// If entry already exists, delete it
-		klog.V(6).Infof("Deleting record `%s` from zone `%s`", record.Name, zone.Domain)
+		klog.Infof("Deleting record `%s` from zone `%s`", record.Name, zone.Domain)
 		err := linodeClient.DeleteDomainRecord(c.ctx, zone.ID, record.ID)
 		if err != nil {
 			return fmt.Errorf("Failed to delete record: %v", err)
@@ -303,7 +303,7 @@ func (c *linodeDNSProviderSolver) CleanUp(ch *v1alpha1.ChallengeRequest) error {
 // The stopCh can be used to handle early termination of the webhook, in cases
 // where a SIGTERM or similar signal is sent to the webhook process.
 func (c *linodeDNSProviderSolver) Initialize(kubeClientConfig *rest.Config, stopCh <-chan struct{}) error {
-	klog.V(6).Info("Initializing")
+	klog.Info("Initializing")
 
 	// Make a Kubernetes clientset available
 	var err error
@@ -383,8 +383,8 @@ func (c *linodeDNSProviderSolver) getAPIKey(cfg *linodeDNSProviderConfig, namesp
 	}
 
 	// Fallback to default secret in the same namespace as the webhook pod
-	klog.V(6).Infof("Failed to use certificate namespace Linode API token secret: %v", err)
-	klog.V(6).Info("Trying webhook pod namespace Linode API token secret")
+	klog.Infof("Failed to use certificate namespace Linode API token secret: %v", err)
+	klog.Info("Trying webhook pod namespace Linode API token secret")
 	token, err = c.podNamespaceToken()
 	if err == nil {
 		return token, nil
