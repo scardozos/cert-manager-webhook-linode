@@ -3,11 +3,11 @@ entries:
   cert-manager-webhook-linode:
   - apiVersion: v2
     appVersion: v0.2.0
-    created: "2024-10-21T23:18:51.92934885+02:00"
+    created: "2024-10-21T23:31:46.537071231+02:00"
     description: A Helm chart for cert-manager-webhook-linode
-    digest: 90100a1267340ca523111bc8c5efdaf27d855661a55bbfecb9cc6659330caa1a
+    digest: 37c8367f172806555d5d51f26181143c81b9a3906fd6f705d2515a71d7547125
     name: cert-manager-webhook-linode
     urls:
     - https://scardozos.github.io/cert-manager-webhook-linode/charts/cert-manager-webhook-linode/cert-manager-webhook-linode-v0.2.0.tgz
     version: v0.2.0
-generated: "2024-10-21T23:18:51.928787918+02:00"
+generated: "2024-10-21T23:31:46.536441981+02:00"
