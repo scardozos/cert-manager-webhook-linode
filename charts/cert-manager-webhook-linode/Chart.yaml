@@ -2,4 +2,4 @@ apiVersion: v2
 appVersion: "v0.2.0"
 description: A Helm chart for cert-manager-webhook-linode
 name: cert-manager-webhook-linode
-version: v0.2.1
+version: v0.2.2
