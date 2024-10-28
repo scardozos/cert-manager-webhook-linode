@@ -20,7 +20,7 @@ deployment:
 
 image:
   repository: scardozos/cert-manager-webhook-linode
-  tag: latest
+  tag: v0.2.1
   pullPolicy: IfNotPresent
 
 nameOverride: ""
